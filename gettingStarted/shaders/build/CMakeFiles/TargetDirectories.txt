@@ -1,0 +1,3 @@
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/shaders/build/CMakeFiles/main.dir
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/shaders/build/CMakeFiles/edit_cache.dir
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/shaders/build/CMakeFiles/rebuild_cache.dir

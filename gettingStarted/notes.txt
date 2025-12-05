@@ -1,0 +1,186 @@
+OpenGL
+_____________________________________________________________-
+
+- OpenGL by itself is not an API but merly a specification developed by Khronos Group
+
+- OpenGL is just a specification that specifies what result/output each function should have. The actual implementation of 
+  open gl is implemented by the graphics cards 
+
+- It's advised to update your drivers so that you can fix any bugs with open gl caused by the graphics card manufactured 
+
+- Immidiate Mode (Fixed Function Pipeline): An older specification of open gl that was easy to use and most functions were hidden inside the library 
+
+- Core Profile Mode: The modern version of openGL, it gives more freedom to the programmer and is less abstract then the immidiate mode 
+
+- OpenGL moved away from Immidiate Mode in version 3.3, because it was less efficient
+
+- Open GL 3.3 is considered the "Modern Version" and all futere versions just optimize it 
+
+- Programmers usually use depricated versions of open gl because only the most modern graphics cards can run the latest version 
+
+- Extesuibs are optimizations in rendering by individual drivers 
+
+- OpenGL is a large state machine 
+
+- The state is called the "context"
+
+- Whenever we want openGL to draw lines instead of triangles, we change the state using a "state-changing" function,
+  Then we use "State-Using Functions" to use them 
+
+- "Object": A collection of options that Represent a subset of OpenGL's state
+        Ex)
+            struct object_name {
+                float  option1;
+                int    option2;
+                char[] name;
+            };
+
+- We can create custom objects with options that we can set in the program 
+
+
+Creating a window
+_____________________________________________________________-
+
+- GFLW: A library written in C that gives us the bare necessities required. It allows us to make a simple window
+
+- CMAKE can generate project files of users chouce from a collection of source code files using pre-defined CMake scripts 
+
+- In order to use GLFW we need to link the library
+
+- V++ Directories: Where we include libraries 
+
+- GLAD: A library that helps retriev OS Specific locations for our GPUs open gl functions 
+
+Hello Window
+_____________________________________________________________-
+
+- Callback: A function used in event driven programming, it's not called by the programmer, but called when the user does something,
+              ie: Resize window, move joystick etc.
+
+- Render Loop: Keeps window open until told to stop
+
+Hello Triangle 
+_____________________________________________________________-
+
+- Graphics Pipeline: Transforms 3D coordinates to 2D Coordinates, then draws the pixels to the screen
+
+- The graphics pipeline has several steps, and each step passes into the one after it
+
+- Shaders: Small Programs that run on GPU for each step of graphic pipeline
+
+- Vertex: Collection of data per 3D coordinate
+
+- Vertex Attributes: Data in a vertex 
+
+- Primitives: Hints we give to openGL on what to draw
+
+- Vertex Shader: First part of graphics pipeline, takes a single vertex and it's main purpose is to transform 3D coordinates to 
+                 different 3D coordinates 
+
+- Geomotry Shader: Second part of graphics pipeline. It takes an input collection of verticies that form a primitive and has the 
+                   ability to generate other shapes by emitting new verticies 
+
+- Primitive Assembly: Third stage of graphics pipeline. takes input of all vertices from the vertex shader that form one or more primitives 
+                      and assembles the points in a primitive shape given 
+
+- Rastizeration Stage: Fourth step of graphics pipeline, it maps the primitives to coresponding pixels on screen, resulting in Fragments 
+                       for the fragment shader to use. Before fragment shader runs clipping is performed, which discards all pixels off 
+                       the screen to help performance 
+
+- Fragment Shader: Fith step of Graphics Pipeline. Calculates the final color of a pixel, usually where advanced graphics occur. 
+
+- Alpha Test and Blending Stage: Sixth and final stage of graphics pipeline, checks the corresponding depth value of the fragment
+                                 and used those to check if the resulting fragment is in front or behind other objects and should 
+                                 be discarded accordingly. Also checks alpha values and blends accordingly
+
+- Fragment: All the data required for OpenFL to render a Single Pixel 
+
+- Nomalized Device coordinates: x,y,z coords in range -1.0 -> 1.0
+
+- Vertex Buffer Object (VBO): Can store large numbers of verticies in the GPU's memory
+
+- GPU Draw Hints for flBudderData
+  GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
+  GL_STATIC_DRAW: the data is set only once and used many times.
+  GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
+
+- Shader Program Object: Final linked version of multiple shaders combined 
+
+
+- Vertex Array Object (VAO): Can be bound just like a buffer and any subsequent vertex attribute calls will be stored inside the VAO.
+
+- Element Buffer Object (EBO): Stores indicies that openGL uses to decide what vertices to draw
+
+
+Shaders
+_____________________________________________________________-
+
+- Shaders are little programs in the GPU that make up the graphics pipeline
+
+- Shaders are isolated programs, there not allowed to communicate with each other 
+
+- Shaders are written in GLSL 
+
+- GLSL: A see like language used for graphics programming, it's usefull because it has usefull features for targeting vector and matrix manipulation 
+
+- Shader Ex:
+    #version version_number
+    in type in_variable_name;
+    in type in_variable_name;
+
+    out type out_variable_name;
+      
+    uniform type uniform_name;
+      
+    void main()
+    {
+      // process input(s) and do some weird graphics stuff
+      ...
+      // output processed stuff to output variable
+      out_variable_name = weird_stuff_we_processed;
+    }
+
+- Vertex Attribute: Input for each shader 
+
+- Vector: A 2, 3, 4 component container for any of the basic types just mentioned 
+
+- Swizzling: Flexible component selection 
+    Ex:
+      vec2 someVec;
+      vec4 differentVec = someVec.xyxx;
+      vec3 anotherVec = differentVec.zyw;
+      vec4 otherVec = someVec.xxxx + anotherVec.yxzy;
+
+    Ex:
+      vec2 vect = vec2(0.5, 0.7);
+      vec4 result = vec4(vect, 0.0, 0.0);
+      vec4 otherResult = vec4(result.xyz, 1.0);
+
+- in/out Keywords: Used to define inputs and outputs in GLSL
+
+- Uniforms: Another way to pass data from our program on the CPU to our GPU, Uniforms are global 
+            meaning it is unique per shader program object and can be accessed by any shader at any 
+            stage of the programs execution 
+
+- If you declare uniform not used anywhere then the compiler will silently remove it, wich can cause several errors 
+
+
+Textures 
+_____________________________________________________________-
+
+- An image used to add detail to an object 
+
+- Sampling: Retreiving a texture color using texture coordinates 
+
+- GL_LINEAR (Nearest Neighbor): The default texture filtering method. When set OpenGL selects the textel that center is 
+                                closest to the texture coordinate.
+
+- GL_LINEAR (Bilinear filtiring): Takes an interpolated falue from a texture coordinates neighboring textels, approximating
+                                  the color 
+
+- GL_NEAREST will give a sort of 8-bit blocky look 
+
+- MiniMaps: A collection of texture images where each texture is twice as small as compared to the other one. When a object 
+            is a certain threashhold awy, opengl will use a different mini-map texture that best suits the object 
+
+- glGenerateMinimap: This is a function that helps us generate all mini maps down to one pixel 

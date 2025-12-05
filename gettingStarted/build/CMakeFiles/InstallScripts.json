@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/build/cmake_install.cmake",
+		"/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/build/src/cmake_install.cmake",
+		"/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/build/examples/cmake_install.cmake",
+		"/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/build/tests/cmake_install.cmake",
+		"/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/build/docs/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
