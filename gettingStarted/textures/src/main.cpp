@@ -2,6 +2,10 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "shader.h"
 #include "stb_image.h"
 
@@ -18,7 +22,11 @@ void processInput(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
 }
 
+
+
 int main() {
+
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -44,24 +52,20 @@ int main() {
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     float vertices[] = {
-        // positions         
-        0.5f, -0.5f, 0.0f, 
-        -0.5f, -0.5f, 0.0f, 
-        0.0f,  0.5f, 0.0f,  
-    };   
-
-    float textCoordinates[] = {
-        0.0f, 0.0f, // Lower-Left Corner
-        1.0f, 0.0f, // Lower-Right Corner
-        0.5f, 1.0f // Top-Center Corner
+        // positions          // colors          // texture coords
+        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  1.0f, 1.0f,   // top right
+        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
     };
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    unsigned int VAO, VBO;
-    unsigned int VBO2, VAO2;
+    unsigned int indices[] = {
+        0, 1, 3,
+        1, 2, 3
+    };
+
+
+    unsigned int VAO, VBO, EBO;
 
     // VAO must be created first
     glGenVertexArrays(1, &VAO);
@@ -73,9 +77,18 @@ int main() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // Vertex attribute pointer
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8* sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(0);
- 
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+    // Ceate EBO
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 
     // --------------------------------------------------
@@ -88,17 +101,21 @@ int main() {
     // Texture Loading
     // --------------------------------------------------
     int width, height, nrChannels;
-    unsigned char* data = stbi_load("../recources/texture/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("../recources/textures/container.jpg", &width, &height, &nrChannels, 0);
 
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    int width2, height2, nrChannels2;
+    unsigned char* data2 = stbi_load("../recources/textures/awesomeface.png", &width2, &height2, &nrChannels2, 0);
+
+    unsigned int textures[2];
+    glGenTextures(2, textures);
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
+
 
     //Set the wrapping/filtering options (On currently bound texture)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     if (data)
     {
@@ -108,11 +125,38 @@ int main() {
 
     else
     {
-        std::cout << "Error: Loading texture \n";
+        std::cout << "Error: Loading texture 1\n";
     }
 
     stbi_image_free(data);
-    
+
+    // Bind second texture
+    glBindTexture(GL_TEXTURE_2D, textures[1]);
+
+    //Set the wrapping/filtering options (On currently bound texture)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    if (data2)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+
+    else
+    {
+        std::cout << "Error: Loading texture 2\n";
+    }
+
+    stbi_image_free(data2);
+
+
+    // Set our mix value
+    float mixVal {0.5};
+    bool move_left {false};
+
     // --------------------------------------------------
     // Render Loop
     // --------------------------------------------------
@@ -125,27 +169,34 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         myShader.use();
+        myShader.setInt("texture1", 0);
+        myShader.setInt("texture2", 1);
         myShader.setFloat("x_offset", offset);
-        if (go_right)
-        {
-            offset += 0.01;
-            if (offset > 1)
-                go_right = false;
-        }
-        else
-        {
-            offset -= 0.01;
-            if (offset < -1)
-                go_right = true;
-        }
-
+        myShader.setFloat("mixVal", mixVal);
+        
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textures[0]);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, textures[1]);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-
-        //glDrawArrays(GL_TRIANGLES, 3, 6);
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+
+        
+        if (offset >= 1.0)
+            move_left = true;
+        
+        if (offset <= -1.0)
+            move_left = false;  
+            
+        if (move_left)
+            offset -= 0.1;
+        else 
+            offset += 0.1;
+
+        mixVal += 0.1;
+        if (mixVal >= 1.1)
+            mixVal = 0.0;
 
         glfwSwapBuffers(window);
         glfwPollEvents();

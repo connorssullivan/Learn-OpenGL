@@ -1,0 +1,3 @@
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/coordinate_system/build/CMakeFiles/main.dir
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/coordinate_system/build/CMakeFiles/edit_cache.dir
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/coordinate_system/build/CMakeFiles/rebuild_cache.dir

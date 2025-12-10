@@ -184,3 +184,127 @@ _____________________________________________________________-
             is a certain threashhold awy, opengl will use a different mini-map texture that best suits the object 
 
 - glGenerateMinimap: This is a function that helps us generate all mini maps down to one pixel 
+
+- OpenGL should have a at least a minimum of 16 texture units for you to use which you can activate using GL_TEXTURE0 to 
+  GL_TEXTURE15. They are defined in order so we could also get GL_TEXTURE8 via GL_TEXTURE0 + 8 
+
+
+Transformations
+_____________________________________________________________-
+
+- Vectors: Directions on a graph with 2 charectreistics (Direction and Magnitude)
+
+- Scaler: A single digit. When adding/subtracting/multiplying/dividing a scaler we simply do the operation to each element in the vector 
+
+- Negation: Negating a vector makes the vector point the oppisite direction 
+
+- For vector addition we add each element of each vector
+
+- Subtracting 2 vectors from each other results in a vector thats the difference of the positions between both vectors
+
+- Use pythagorus theorum to retreive the magnitude/ length of a vector
+
+- Unit Vector (n^): Has one extra property, that it's length is exactly 1
+
+- Normalizing: We can calculate a unit vector from any vector by dividing each of the vectors components by it's length
+
+- Normal Multipication isnt really defined on vectors since it has no visual meaning
+
+- Dot Product: The scalar product of their lengths times the cosine of the angle between them 
+      Ex:
+          0.6        0
+          -0.8.  *   1 = (0.6*0) + (-0.8 * 1) + (0 * 0) = -0.8 
+          0          0
+
+- cosine function becomes 0 when the angle is 90 degrees, or 1 when the angle is 0. This allows us to test if the 
+  vectors are orthogonal (Thry form a right angle to each other). 
+
+
+- Cross Product: Only defined in 3D space and takes 2 non parrllel vectors and produces a third vector that is orthagonal to both 
+
+- Matrix: A rectangular array of numbers symbols and mathmatical expressions
+
+- Matrixes need to hace same rows and colomns to be added and subtracted 
+
+- Rules for Multiplying Matricies:
+    1 - You can only multiply 2 matricies if the number of columns on the left hand side is equal to the number of rows on the 
+        right hand side
+    2 - Matrix Multipication is not Commutative A * B != B * A
+
+- Vector: A Nx1 Matrix
+
+- Identity Matrix: A matrix of all 0's except on the diagnal 
+
+- Uniform Scale: When scaling is equal on all axeses 
+
+- Adding a another vector to return a new vector with a different position 
+
+- homogeneous coordinate (w): This coordinate helps us do transformations on 3D vectors 
+
+- Matrix multiptication is not communative, meaning multipication order matters 
+
+- GLM (OpenGL Mathmatics): A header only library for Open Gl Math
+
+
+Coordinate Systems
+_____________________________________________________________-
+
+- Normalized Device Coordinates (NDC): The coordinates OpenGL uses from -1 to 1
+
+- Bellow are the 6 stages of coordinates 
+
+- Local Space: The coordinate space that is local to your object, where the object begins in. 
+
+- World Space: The verticies of all your virticies relative to the game world. The coordinates of Local Space are transformed 
+               to world space using the model matrix
+
+        - Model Matrix - A transformation matrix that scales, translates, rotates your object to a place it belongs to
+
+- View Space: What people usually refer to as the Camera of OpenGL, sometimes it's called the camera space. It is responsable 
+              for transforming the world space to something in the users view.
+
+- Clip Space: Any coordinates that fall outside of the specified range are "clipped", meaning they are discarder and not 
+              sent to fragment shader.
+
+
+        - Projection Matrix - Specifies a range of coordinates (Say -1000->1000) in each dimension, then the a stage called perspective
+                              division converts the coordinates to normalized coordinates bettween -1,1. say we have a coordinate 
+                              (1200, 500, 759), this will be clipped, because it's x is out of range.
+
+        - Frustum: Each coordinate in here will end up on the users screen.  
+
+
+        - Perspective Division: We divie x, y, and z coordinates of a position vector by a vectors w component, and transform the 4D clip space 
+                                to a 3D normalized device coordinate. 
+  
+- Orthagraphic Projection: Defines a cube like frustum box that defines the clipping space where each vertex outside this box is clipped. 
+                
+                - glm::ortho(float, float, float, float, float, float):
+                        . First 2 Parameters: Left and Right of the frustrum 
+                        . 3rd and 4th parameters: Specify the bottom and top of frustrum 
+                        . 5th and 6th parameters specify thedistance betwee the far planes of the frustrum 
+
+
+- Perspective Projection: Maps a given Frustum range to clip a space, but also manipulates the w value of each vertex 
+                          coordinate in such a way that the durther a vertex coordinate is away from the viewer, the 
+                          higher the w is   
+
+
+                - glm::mat4 proj = glm::perspective(glm::radians(45.0f, (float)width/(float)height), 0.1f, 100.0f)
+                                                        FOV                   Aspect Ratio           Near   Far
+
+
+
+- Because orthagraphic projection doesnt have perspective projection objects farther away don't seem smaller, which has weird visual output
+
+Vclip = Mprojection * Mview * Mmodel * Vlocal
+
+- Model Matrix: Consists of trnslations, scaling, and rotations we want to apply to all verticies in the global space 
+
+- View Matrix: We move the whole scene around inversed to where we want the camera to move 
+
+- Right Hand System: Posative X is right, Posative Y is Up, And Posative Z is Backwards 
+
+- Z-Buffer: Stores all the depth information, we can configure the z buffer to do depth testing
+
+-

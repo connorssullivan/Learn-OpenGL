@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/build",
+  "command": "/usr/bin/c++  -I/Users/connorsullivan/CodeProjects/glfw-3.4.bin.MACOS/include -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include/shaders -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include/glm -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -std=gnu++20 -arch arm64 -o CMakeFiles/main.dir/src/main.cpp.o -c /Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/src/main.cpp",
+  "file": "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/src/main.cpp",
+  "output": "CMakeFiles/main.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/build",
+  "command": "/usr/bin/cc  -I/Users/connorsullivan/CodeProjects/glfw-3.4.bin.MACOS/include -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include/shaders -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include/glm -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks  -arch arm64 -o CMakeFiles/main.dir/src/glad.c.o -c /Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/src/glad.c",
+  "file": "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/src/glad.c",
+  "output": "CMakeFiles/main.dir/src/glad.c.o"
+},
+{
+  "directory": "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/build",
+  "command": "/usr/bin/c++  -I/Users/connorsullivan/CodeProjects/glfw-3.4.bin.MACOS/include -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include/shaders -I/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/include/glm -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -std=gnu++20 -arch arm64 -o CMakeFiles/main.dir/src/stb_image.cpp.o -c /Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/src/stb_image.cpp",
+  "file": "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/math/src/stb_image.cpp",
+  "output": "CMakeFiles/main.dir/src/stb_image.cpp.o"
+}
+]

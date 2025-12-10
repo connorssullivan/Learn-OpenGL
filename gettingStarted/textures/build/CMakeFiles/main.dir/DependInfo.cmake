@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/textures/src/glad.c" "CMakeFiles/main.dir/src/glad.c.o" "gcc" "CMakeFiles/main.dir/src/glad.c.o.d"
   "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/textures/src/main.cpp" "CMakeFiles/main.dir/src/main.cpp.o" "gcc" "CMakeFiles/main.dir/src/main.cpp.o.d"
+  "/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/textures/src/stb_image.cpp" "CMakeFiles/main.dir/src/stb_image.cpp.o" "gcc" "CMakeFiles/main.dir/src/stb_image.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
