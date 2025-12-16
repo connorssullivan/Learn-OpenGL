@@ -307,4 +307,10 @@ Vclip = Mprojection * Mview * Mmodel * Vlocal
 
 - Z-Buffer: Stores all the depth information, we can configure the z buffer to do depth testing
 
--
+
+Camera
+_____________________________________________________________-
+
+- Camera: The camera/view space is all the vertex coordinates seen from the cameras perspective as the orgin of the scene 
+
+- 

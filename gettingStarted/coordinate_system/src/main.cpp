@@ -266,7 +266,9 @@ int main() {
 
             angle += 0.1f; 
             float cubeAngle = angle + i * 10.0f;
-            model = glm::rotate(model, glm::radians(cubeAngle), glm::vec3(0.5f, 1.0f, 0.0f));
+
+            if (i % 3 == 0)
+                model = glm::rotate(model, glm::radians(cubeAngle), glm::vec3(0.5f, 1.0f, 0.0f));
 
             unsigned int modelLoc = glGetUniformLocation(myShader.ID, "model");
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
