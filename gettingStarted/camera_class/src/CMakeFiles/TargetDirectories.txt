@@ -1,0 +1,3 @@
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/hello_window/src/CMakeFiles/main.dir
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/hello_window/src/CMakeFiles/edit_cache.dir
+/Users/connorsullivan/CodeProjects/learnopengl/gettingStarted/hello_window/src/CMakeFiles/rebuild_cache.dir

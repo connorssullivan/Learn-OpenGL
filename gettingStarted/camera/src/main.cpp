@@ -276,7 +276,13 @@ int main() {
             lastState[glfwKey] = state;
         }
 
-        
+        // Camera rotation 
+        const float radius = 10.f;
+        float camX = sin(glfwGetTime()) * radius;
+        float camY = sin(sin(glfwGetTime() * 0.5)) * radius;
+        float camZ = cos(glfwGetTime()) * radius;
+
+        view = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
         
 
         myShader.use();

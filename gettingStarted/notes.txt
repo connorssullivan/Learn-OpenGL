@@ -313,4 +313,17 @@ _____________________________________________________________-
 
 - Camera: The camera/view space is all the vertex coordinates seen from the cameras perspective as the orgin of the scene 
 
-- 
+- LookAt(Vec3 CameraPosition, Vec3 Eye, Vec3 Up): Creates a Look At Vector that is used for creating a camera usualy
+
+- When designing games and applications, we want to make sure that it renders on the same time for all kinds of hardware
+
+- DeltaTime: A varriable that stores the time it took to render the last frame, meanong if the last frame took longer then average
+             the velocity for that frame will also be a bit higher to balance it all out accordingly so each user will have the same 
+             experience 
+
+- Euler Angles: 3 Values that can represent any rotation in 3D
+        > Pitch: How much we are looking up or down 
+        > Yaw: Represents the magnitude we are looking to left or to the right 
+        > Roll: Represents how much we roll (Mostly used in space flight cameras)
+
+- Capturing Mouse: Once the application captures the mouse, it stays in center of window until it loses capture or quits
